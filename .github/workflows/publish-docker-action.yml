@@ -1,0 +1,24 @@
+name: publish-docker-action
+
+on:
+  push:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  server:
+    name: 'publish-docker-action:latest'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull image from Docker Hub
+      run: docker pull wuhan005/publish-docker-action
+    - name: Tag image
+      run: docker tag wuhan005/publish-docker-action:latest registry.cn-beijing.aliyuncs.com/eggplant/publish-docker-action:latest
+    - name: Login to Aliyun registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: registry.cn-beijing.aliyuncs.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}  
+    - name: Push image to Aliyun
+      run: docker push registry.cn-beijing.aliyuncs.com/eggplant/publish-docker-action:latest
