@@ -3,7 +3,7 @@ name: publish-docker-action
 on:
   push:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/60 * * * *'
 
 jobs:
   server:
