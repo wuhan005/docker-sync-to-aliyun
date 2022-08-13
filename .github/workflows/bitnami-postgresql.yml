@@ -1,6 +1,7 @@
 name: bitnami/postgresql
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '*/10 * * * *'
 
