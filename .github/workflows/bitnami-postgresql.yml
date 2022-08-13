@@ -7,7 +7,7 @@ on:
 
 jobs:
   postgresql:
-    name: 'server:insiders'
+    name: 'bitnami/postgresql'
     runs-on: ubuntu-latest
     steps:
     - name: Pull image from Docker Hub
