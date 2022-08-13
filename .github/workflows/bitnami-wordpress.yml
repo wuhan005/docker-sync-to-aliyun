@@ -1,0 +1,24 @@
+name: bitnami/wordpress
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/60 * * * *'
+
+jobs:
+  wordpress:
+    name: 'bitnami/wordpress'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull image from Docker Hub
+      run: docker pull docker.io/bitnami/wordpress:latest
+    - name: Tag image
+      run: docker tag docker.io/bitnami/wordpress:latest registry.cn-hangzhou.aliyuncs.com/eggplant/bitnami-wordpress:latest
+    - name: Login to Aliyun registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}  
+    - name: Push image to Aliyun
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/bitnami-wordpress:latest
