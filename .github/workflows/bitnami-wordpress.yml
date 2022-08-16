@@ -10,10 +10,10 @@ jobs:
     name: 'bitnami/wordpress'
     runs-on: ubuntu-latest
     steps:
-    - name: Pull image from Docker Hub
-      run: docker pull docker.io/bitnami/wordpress:5.9.2-debian-10-r26
-    - name: Tag image
-      run: docker tag docker.io/bitnami/wordpress:5.9.2-debian-10-r26 registry.cn-hangzhou.aliyuncs.com/eggplant/bitnami-wordpress:5.9.2-debian-10-r26
+    - name: Build image
+      run: |
+        cd bitnami-wordpress
+        docker build --file Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/bitnami-wordpress:latest .
     - name: Login to Aliyun registry
       uses: azure/docker-login@v1
       with:
@@ -21,4 +21,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}  
     - name: Push image to Aliyun
-      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/bitnami-wordpress:5.9.2-debian-10-r26
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/bitnami-wordpress:latest
