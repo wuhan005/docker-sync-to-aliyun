@@ -58,8 +58,8 @@ component_unpack() {
     fi
     if [ -n "$package_sha256" ]; then
         echo "Verifying package integrity"
-        echo "$package_sha256  ${base_name}.tar.gz" | sha256sum --check - || return "$?"
+        echo "$package_sha256  ${base_name}.tar.gz" | sha256sum --check - || exit "$?"
     fi
-    tar --directory "${directory}" --extract --gunzip --file "${base_name}.tar.gz" --no-same-owner --strip-components=2 || return "$?"
+    tar --directory "${directory}" --extract --gunzip --file "${base_name}.tar.gz" --no-same-owner --strip-components=2
     rm "${base_name}.tar.gz"
 }
