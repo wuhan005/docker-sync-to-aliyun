@@ -34,6 +34,9 @@ RUN /opt/bitnami/scripts/php/postunpack.sh
 RUN /opt/bitnami/scripts/apache-modphp/postunpack.sh
 RUN /opt/bitnami/scripts/wordpress/postunpack.sh
 RUN /opt/bitnami/scripts/wp-cli/postunpack.sh
+
+ADD php.ini /opt/bitnami/php/etc
+
 ENV APACHE_HTTPS_PORT_NUMBER="" \
     APACHE_HTTP_PORT_NUMBER="" \
     APP_VERSION="5.9.2" \
