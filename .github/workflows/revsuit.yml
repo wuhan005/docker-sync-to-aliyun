@@ -29,6 +29,8 @@ jobs:
       run: |
         cd frontend && yarn install && yarn build
         cd ../ && go build ./cmd/revsuit/revsuit.go
+        ls -al
+        pwd
     - name: Build image
       run: |
         docker build --file Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest .
