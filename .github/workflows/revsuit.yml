@@ -1,0 +1,42 @@
+name: revsuit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/60 * * * *'
+
+jobs:
+  revsuit:
+    name: 'revsuit'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        repository: li4n0/revsuit
+    - name: Get revsuit version
+      run: echo '::set-output version=RELEASE_VERSION::$(git describe --tags)'
+      id: git-revsuit
+    - name: Install Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.19.x'
+    - name: Install NodeJS
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Build revsuit
+      run: |
+        cd frontend && yarn install && yarn build
+        cd ../ && go build ./cmd/revsuit/revsuit.go
+    - name: Build image
+      run: |
+        docker build --file Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest .
+    - name: Login to Aliyun registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+    - name: Push image to Aliyun
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:${{ steps.git-revsuit.outputs.RELEASE_VERSION }}
