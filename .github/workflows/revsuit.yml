@@ -15,7 +15,7 @@ jobs:
       with:
         repository: li4n0/revsuit
     - name: Get revsuit version
-      run: echo '::set-output version=RELEASE_VERSION::$(git describe --tags)'
+      run: echo '::set-output name=RELEASE_VERSION::$(git describe --tags)'
       id: git-revsuit
     - name: Install Go
       uses: actions/setup-go@v3
