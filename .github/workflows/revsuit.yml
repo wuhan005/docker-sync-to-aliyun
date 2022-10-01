@@ -31,15 +31,10 @@ jobs:
     - name: Build revsuit
       run: |
         cd revsuit/frontend && yarn install && yarn build
-        pwd
-        ls
         cd ../ && go build ./cmd/revsuit/revsuit.go
-        cd ..
-        ls -al
-        pwd
     - name: Build image
       run: |
-        docker build --file Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest .
+        docker build --file ./revsuit/Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest .
     - name: Login to Aliyun registry
       uses: azure/docker-login@v1
       with:
