@@ -17,9 +17,6 @@ jobs:
       with:
         repository: li4n0/revsuit
         path: revsuit-source
-    - name: Get revsuit version
-      run: echo '::set-output name=RELEASE_VERSION::$(git describe --tags)'
-      id: git-revsuit
     - name: Install Go
       uses: actions/setup-go@v3
       with:
@@ -34,9 +31,7 @@ jobs:
         cd ../ && go build ./cmd/revsuit/revsuit.go
     - name: Build image
       run: |
-        pwd
-        ls
-        docker build --file ./revsuit/Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:${{ steps.git-revsuit.outputs.RELEASE_VERSION }} ./revsuit-source
+        docker build --file ./revsuit/Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest ./revsuit-source
     - name: Login to Aliyun registry
       uses: azure/docker-login@v1
       with:
@@ -44,4 +39,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
     - name: Push image to Aliyun
-      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:${{ steps.git-revsuit.outputs.RELEASE_VERSION }}
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest
