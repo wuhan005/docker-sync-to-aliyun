@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: li4n0/revsuit
-        path: revsuit
+        path: revsuit-source
     - name: Get revsuit version
       run: echo '::set-output name=RELEASE_VERSION::$(git describe --tags)'
       id: git-revsuit
@@ -30,7 +30,7 @@ jobs:
         node-version: 16
     - name: Build revsuit
       run: |
-        cd revsuit/frontend && yarn install && yarn build
+        cd revsuit-source/frontend && yarn install && yarn build
         cd ../ && go build ./cmd/revsuit/revsuit.go
     - name: Build image
       run: |
