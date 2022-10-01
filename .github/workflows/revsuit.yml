@@ -30,6 +30,8 @@ jobs:
         node-version: 16
     - name: Build revsuit
       run: |
+        pwd
+        ls
         cd frontend && yarn install && yarn build
         cd ../ && go build ./cmd/revsuit/revsuit.go
         cd ..
