@@ -36,7 +36,7 @@ jobs:
       run: |
         pwd
         ls
-        docker build --file ./revsuit/Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest .
+        docker build --file ./revsuit/Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest ./revsuit-source
     - name: Login to Aliyun registry
       uses: azure/docker-login@v1
       with:
