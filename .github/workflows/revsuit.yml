@@ -27,7 +27,6 @@ jobs:
         node-version: 16
     - name: Build revsuit
       run: |
-        cd revsuit
         ls
         pwd
         cd revsuit/frontend && yarn install && yarn build
