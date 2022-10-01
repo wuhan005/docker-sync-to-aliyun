@@ -12,8 +12,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Checkout revsuit code
+      uses: actions/checkout@v2
       with:
         repository: li4n0/revsuit
+        path: revsuit
     - name: Get revsuit version
       run: echo '::set-output name=RELEASE_VERSION::$(git describe --tags)'
       id: git-revsuit
