@@ -1,0 +1,24 @@
+name: nginx-errors
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/60 * * * *'
+
+jobs:
+  postgresql:
+    name: 'ingress-nginx/nginx-errors'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull image from Docker Hub
+      run: docker pull registry.k8s.io/ingress-nginx/nginx-errors:v20220916-gd32f8c343
+    - name: Tag image
+      run: docker tag registry.k8s.io/ingress-nginx/nginx-errors:v20220916-gd32f8c343 registry.cn-hangzhou.aliyuncs.com/eggplant/nginx-errors:v20220916-gd32f8c343
+    - name: Login to Aliyun registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}  
+    - name: Push image to Aliyun
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/nginx-errors:v20220916-gd32f8c343
