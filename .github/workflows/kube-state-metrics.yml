@@ -1,0 +1,24 @@
+name: kube-state-metrics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/60 * * * *'
+
+jobs:
+  kube-state-metrics:
+    name: 'kube-state-metrics'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull image from Docker Hub
+      run: docker pull registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.6.0
+    - name: Tag image
+      run: docker tag registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.6.0 registry.cn-hangzhou.aliyuncs.com/eggplant/kube-state-metrics:v2.6.0
+    - name: Login to Aliyun registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}  
+    - name: Push image to Aliyun
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/kube-state-metrics:v2.6.0
