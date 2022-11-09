@@ -28,7 +28,7 @@ jobs:
     - name: Build revsuit
       run: |
         cd revsuit-source/frontend && yarn install && yarn build
-        cd ../ && go build ./cmd/revsuit/revsuit.go
+        cd ../ && CGO_ENABLED=0 go build -ldflags "-w -s -extldflags '-static'" ./cmd/revsuit/revsuit.go
     - name: Build image
       run: |
         docker build --file ./revsuit/Dockerfile -t registry.cn-hangzhou.aliyuncs.com/eggplant/revsuit:latest ./revsuit-source
