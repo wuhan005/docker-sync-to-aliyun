@@ -11,4 +11,4 @@ RUN apk add tzdata && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 EXPOSE 80
-ENTRYPOINT ["/home/revsuit"]
+ENTRYPOINT ["/home/revsuit", "--config=/home/coder/config.yaml"]
