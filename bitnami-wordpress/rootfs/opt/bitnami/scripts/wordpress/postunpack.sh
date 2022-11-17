@@ -25,7 +25,7 @@ set -o pipefail
 . "/opt/bitnami/scripts/$(web_server_type)-env.sh"
 
 # Enable WordPress configuration file
-[[ ! -f "$WORDPRESS_CONF_FILE" ]] && cp "${WORDPRESS_BASE_DIR}/wp-config-sample.php" "$WORDPRESS_CONF_FILE"
+# [[ ! -f "$WORDPRESS_CONF_FILE" ]] && cp "${WORDPRESS_BASE_DIR}/wp-config-sample.php" "$WORDPRESS_CONF_FILE"
 
 # Ensure the WordPress base directory exists and has proper permissions
 info "Configuring file permissions for WordPress"
