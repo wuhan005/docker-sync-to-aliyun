@@ -1,0 +1,24 @@
+name: couchdb
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/60 * * * *'
+
+jobs:
+  couchdb:
+    name: 'couchdb'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull image from Docker Hub
+      run: docker pull couchdb:3.2.1
+    - name: Tag image
+      run: docker tag couchdb:3.2.1 registry.cn-hangzhou.aliyuncs.com/eggplant/couchdb:3.2.1
+    - name: Login to Aliyun registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: registry.cn-hangzhou.aliyuncs.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}  
+    - name: Push image to Aliyun
+      run: docker push registry.cn-hangzhou.aliyuncs.com/eggplant/couchdb:3.2.1
